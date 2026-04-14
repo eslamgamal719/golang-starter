@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,8 +11,11 @@ func main() {
 	app := app()
 	application := app()
 	application.Gin.GET("/ping", func(c *gin.Context) {
-		// Return JSON response
-		c.JSON(http.StatusOK, gin.H{
+		request := newRequest(c)
+		fmt.Println(request.Connection.Ping())
+		request.closeConnection()
+		fmt.Println(request.Connection.Ping())
+		request.Context.JSON(http.StatusOK, gin.H{
 			"message": "pong",
 		})
 	})
