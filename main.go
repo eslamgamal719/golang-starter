@@ -1,9 +1,6 @@
 package main
 
 import (
-	"fmt"
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,12 +9,11 @@ func main() {
 	application := app()
 	application.Gin.GET("/ping", func(c *gin.Context) {
 		request := newRequest(c)
-		fmt.Println(request.Connection.Ping())
-		request.closeConnection()
-		fmt.Println(request.Connection.Ping())
-		request.Context.JSON(http.StatusOK, gin.H{
-			"message": "pong",
-		})
+
+		request.NotAuth()
+		//request.Context.JSON(http.StatusOK, gin.H{
+		//	"message": "pong",
+		//})
 	})
 
 	application.Gin.Run(":8081")

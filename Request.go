@@ -50,3 +50,8 @@ func connectToDatabase() (*gorm.DB, *sql.DB) {
 func (request Request) closeConnection() {
 	request.Connection.Close()
 }
+
+func (request Request) Response(code int, body interface{}) {
+	request.closeConnection()
+	request.Context.JSON(code, body)
+}
